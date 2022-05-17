@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <vector>
 #include <cfloat>
+#include <numeric>
 
 using namespace std;
 using namespace Eigen;
@@ -36,6 +37,7 @@ typedef struct Neighbor
 
 typedef struct Veci_int{
     VectorXi labels;
+    vector<int> dist_num_arr;
     int iter;
     double cal_dist_num;
     double time;

@@ -27,5 +27,9 @@ cdef class PyBKM:
         return np.array(self.c_BKM.cal_num_dist)
 
     @property
+    def dist_num_arr(self):
+        return np.array(self.c_BKM.dist_num_arr)
+
+    @property
     def time_arr(self):
         return np.array(self.c_BKM.time_arr)

@@ -28,6 +28,19 @@ cal_num_dist = mod.cal_num_dist
 
 print(n_iter)
 print(cal_num_dist)
+print(np.sum(mod.dist_num_arr[0]))
+print(times)
+
+mod = BKM(X, c_true, debug=True)
+mod.opt(Cens, isRing=False, ITER=100)
+Y = mod.y_pre
+n_iter = mod.n_iter_
+times = mod.time_arr
+cal_num_dist = mod.cal_num_dist
+
+print(n_iter)
+print(cal_num_dist)
+print(np.sum(mod.dist_num_arr[0]))
 print(times)
 
 # KMeans

@@ -56,12 +56,12 @@ def configuration(parent_package='', top_path=None):
 
 
 setup(name=module_name,
-      version="0.0.1",
+      version="0.0.2",
       author="Shenfei Pei",
       author_email="shenfeipei@gmail.com",
       description="A python implementation of 'Centerless Clustering', TPAMI, 2022",
       url="https://github.com/ShenfeiPei/BallKMeans",
-      install_requires=['numpy>=1.20.3', 'scipy>=1.5.3', 'pandas>=1.2.3', 'scikit-learn>=0.23.2'],
+      install_requires=['numpy>=1.20.3', 'scipy>=1.5.3', 'pandas>=1.2.3', 'scikit-learn>=0.22.2'],
       classifiers=['Intended Audience :: Science/Research',
                    'Intended Audience :: Developers',
                    'License :: OSI Approved :: MIT License',

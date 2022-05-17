@@ -48,6 +48,7 @@ Veci_int ball_k_means_Ring(MatrixOur& dataset, MatrixOur& centroids, int ITER, b
     cal_dist_num = 0;
     flag.setZero();
 
+    vector<int> dist_num_arr(ITER, 0);
     //initialize cluster_point_index and temp_dis
     initialize(dataset, centroids, labels, cluster_point_index, clusters_neighbors_index, temp_dis);
 
@@ -56,7 +57,9 @@ Veci_int ball_k_means_Ring(MatrixOur& dataset, MatrixOur& centroids, int ITER, b
     std::chrono::time_point<std::chrono::steady_clock> t1;
     std::chrono::time_point<std::chrono::steady_clock> t2;
     t1 = std::chrono::steady_clock::now();
+    int iter = 0;
     while (true) {
+        cal_dist_num = 0;
         old_flag = flag;
         //record cluster_point_index from the previous round
         cluster_point_index.assign(temp_cluster_point_index.begin(), temp_cluster_point_index.end());
@@ -194,6 +197,10 @@ Veci_int ball_k_means_Ring(MatrixOur& dataset, MatrixOur& centroids, int ITER, b
                     }
                 }
             }
+
+
+            dist_num_arr[iter] = cal_dist_num;
+            iter ++;
         }
         else{
             break;
@@ -202,6 +209,7 @@ Veci_int ball_k_means_Ring(MatrixOur& dataset, MatrixOur& centroids, int ITER, b
     t2 = std::chrono::steady_clock::now();
     double time_spend = std::chrono::duration<double>(t2 - t1).count();
     
+    cal_dist_num = accumulate(dist_num_arr.begin(), dist_num_arr.end(), decltype(dist_num_arr)::value_type(0));
     if (detail == true) {
         cout << "ball-k-means with dividing ring:" << endl;
         cout << "k                :                  ||" << k << endl;
@@ -218,6 +226,7 @@ Veci_int ball_k_means_Ring(MatrixOur& dataset, MatrixOur& centroids, int ITER, b
     ret.labels = labels;
     ret.iter = iteration_counter;
     ret.cal_dist_num = cal_dist_num;
+    ret.dist_num_arr = dist_num_arr;
     ret.time = time_spend;
     return ret;
 }
@@ -271,6 +280,7 @@ Veci_int ball_k_means_noRing(MatrixOur& dataset, MatrixOur& centroids, int ITER,
     num_of_neighbour = 0;
     cal_dist_num = 0;
     flag.setZero();
+    vector<int> dist_num_arr(ITER, 0);
 
     //initialize clusters_point_index and point_center_dist
     initialize(dataset, centroids, labels, clusters_point_index, clusters_neighbors_index, point_center_dist);
@@ -280,7 +290,9 @@ Veci_int ball_k_means_noRing(MatrixOur& dataset, MatrixOur& centroids, int ITER,
     std::chrono::time_point<std::chrono::steady_clock> t1;
     std::chrono::time_point<std::chrono::steady_clock> t2;
     t1 = std::chrono::steady_clock::now();
+    int iter = 0;
     while (true) {
+        cal_dist_num = 0;
         old_flag = flag;
         //record clusters_point_index from the previous round
         clusters_point_index.assign(temp_clusters_point_index.begin(), temp_clusters_point_index.end());
@@ -415,6 +427,8 @@ Veci_int ball_k_means_noRing(MatrixOur& dataset, MatrixOur& centroids, int ITER,
 
             }
 
+            dist_num_arr[iter] = cal_dist_num;
+            iter ++;
         }
         else {
             break;
@@ -423,6 +437,8 @@ Veci_int ball_k_means_noRing(MatrixOur& dataset, MatrixOur& centroids, int ITER,
 
     t2 = std::chrono::steady_clock::now();
     double time_spend = std::chrono::duration<double>(t2 - t1).count();
+
+    cal_dist_num = accumulate(dist_num_arr.begin(), dist_num_arr.end(), decltype(dist_num_arr)::value_type(0));
 
     if (detail == true) {
         cout << "ball-k-means without dividing ring:" << endl;
@@ -439,6 +455,7 @@ Veci_int ball_k_means_noRing(MatrixOur& dataset, MatrixOur& centroids, int ITER,
     ret.iter = iteration_counter;
     ret.cal_dist_num = cal_dist_num;
     ret.time = time_spend;
+    ret.dist_num_arr = dist_num_arr;
     return ret;
 
 }
